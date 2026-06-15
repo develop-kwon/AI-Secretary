@@ -1,0 +1,15 @@
+# 환경변수 (절대 올리면 안 됨)
+.env
+
+# Node.js
+node_modules/
+
+# Python venv
+.venv/
+
+# 빌드 결과물
+dist/
+*.js.map
+
+# OS
+.DS_Store
