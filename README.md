@@ -2,7 +2,7 @@
 
 매일 오전 9시(KST) 자동으로 AI/IT 뉴스를 수집·요약하고 개인 구글 캘린더 일정을 합쳐 Gmail로 발송하는 멀티 에이전트 파이프라인입니다.
 
-![예시 결과](https://github.com/user-attachments/assets/1154503a-6365-4604-9551-d18b4cfe4be7)
+![예시 결과](https://github.com/user-attachments/assets/a88f54b9-a920-489c-b828-3c0c3da65685)
 
 ---
 
