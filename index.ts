@@ -14,10 +14,11 @@ import "dotenv/config";
 // ============================================================
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY ?? "";
 const ZAPIER_AUTH    = process.env.ZAPIER_AUTH    ?? "";
-const EMAIL_TO       = process.env.EMAIL_TO       ?? "eric010316@gmail.com";
+const EMAIL_TO       = process.env.EMAIL_TO       ?? "";
 
 if (!OPENAI_API_KEY) throw new Error("❌ OPENAI_API_KEY 없음 (.env 확인)");
 if (!ZAPIER_AUTH)    throw new Error("❌ ZAPIER_AUTH 없음 (.env 확인)");
+if (!EMAIL_TO)       throw new Error("❌ EMAIL_TO 없음 (.env 확인)");
 
 process.env.OPENAI_API_KEY = OPENAI_API_KEY;
 
@@ -26,7 +27,12 @@ process.env.OPENAI_API_KEY = OPENAI_API_KEY;
 // ============================================================
 const webSearch = webSearchTool({
   searchContextSize: "high",
-  userLocation: { type: "approximate" },
+  userLocation: {
+    type: "approximate",
+    country: "KR",
+    city: "Seoul",
+    timezone: "Asia/Seoul",
+  },
 });
 
 const mcp = hostedMcpTool({
@@ -64,9 +70,9 @@ const agentA = new Agent({
 [필수 실행 순서]
 1. 사용자가 알려준 TODAY_DATE와 YESTERDAY_DATE 값을 확인하세요.
 2. 웹 검색 도구로 아래 쿼리를 실행하세요 (쿼리에 날짜가 포함되어 있어 최신 결과가 나옵니다).
-   - 쿼리1: "AI 뉴스 TODAY_DATE"
-   - 쿼리2: "인공지능 기술 TODAY_DATE"
-   - 쿼리3: "AI technology news TODAY_DATE"
+   - 쿼리1: "AI 뉴스 TODAY_DATE site:news.google.com"
+   - 쿼리2: "인공지능 기술 TODAY_DATE site:news.google.com"
+   - 쿼리3: "AI technology news TODAY_DATE site:news.google.com"
 3. 검색 결과의 각 기사에서 발행 날짜를 먼저 확인하세요.
    - TODAY_DATE이면 → 채택
    - YESTERDAY_DATE이면 → 오늘 기사가 3개 미만일 때만 채택
@@ -392,9 +398,9 @@ ${safeHtml}`
 // ============================================================
 console.log("⏰ AI 브리핑 오케스트레이터 가동. (대기 중...)");
 console.log(`   📧 발송 대상: ${EMAIL_TO}`);
-console.log("   🕐 실행 시간: 매일 오전 9시 KST (cron: 0 9 * * *)");
+console.log("   🕐 실행 시간: 매일 오전 9시 00분 KST (cron: 0 9 * * *)");
 
-cron.schedule("46 13 * * *", async () => {
+cron.schedule("0 9 * * *", async () => {
   const now = new Date().toLocaleString("ko-KR", { timeZone: "Asia/Seoul" });
   console.log(`\n🚀 [${now}] 자동 실행 시작`);
   try {
